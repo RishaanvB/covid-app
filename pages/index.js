@@ -10,7 +10,7 @@ export default function Home() {
       </Head>
 
       <main >
-        <h1>Next app</h1>
+        <h1>Changed  index js</h1>
       </main>
 
       <footer>
