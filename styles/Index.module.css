@@ -1,0 +1,28 @@
+.gridContainer {
+  display: grid;
+  grid-template-columns: 3fr 3fr 2fr;
+  grid-template-areas:
+    'box1 box2 info'
+    'map map graph1'
+    'map map graph2';
+    gap: 1.5rem;
+}
+
+.box1 {
+  grid-area: box1;
+}
+.box2 {
+  grid-area: box2;
+}
+.info {
+  grid-area: info;
+}
+.map {
+  grid-area: map;
+}
+.graph1 {
+  grid-area: graph1;
+}
+.graph2 {
+  grid-area: graph2;
+}
