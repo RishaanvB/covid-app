@@ -5,24 +5,71 @@
     'box1 box2 info'
     'map map graph1'
     'map map graph2';
-    gap: 1.5rem;
+  gap: 1.5rem;
+}
+.blackBox {
+  background-color: #303030;
+}
+
+.greenBox {
+  background-color: #276a67;
+}
+.whiteBox {
+  background-color: #f7f7f7;
+  color: #303030 !important; /* could set boxUtils in higher position on cascading list so important would not be needed  */
+  box-shadow: 2px 7px 10px 1px rgba(209, 209, 209, 0.46) !important;
+
+}
+
+.boxUtils {
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 2px 7px 10px 1px rgb(51 51 51 / 46%);
+  border: 0px solid rgba(0, 0, 0, 0);
+  padding: 0.4rem 1rem;
+  color: #f5efed;
+}
+.boxUtils h1 {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin: 0.5rem;
+}
+.boxUtils h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin: 0.5rem;
+}
+.boxUtils p {
+  font-size: 1rem;
+  margin: 0.5rem;
 }
 
 .box1 {
+  composes: boxUtils blackBox;
   grid-area: box1;
+  color: #be3327;
 }
 .box2 {
+  composes: boxUtils blackBox;
   grid-area: box2;
 }
 .info {
+  composes: boxUtils greenBox;
   grid-area: info;
+  font-size: 1rem;
+}
+.info h3{
+  font-weight: normal;
+  margin:.3rem;
 }
 .map {
   grid-area: map;
 }
 .graph1 {
+  composes: boxUtils whiteBox;
   grid-area: graph1;
 }
 .graph2 {
+  composes: boxUtils whiteBox;
   grid-area: graph2;
 }

@@ -11,8 +11,10 @@ function HomePage() {
   useEffect(() => {
     fetch('https://disease.sh/v3/covid-19/continents/europe?strict=true')
       .then((response) => response.json())
-      .then((data) => setData(data));
-    console.log(data);
+      .then((data) => {
+        console.log(data);
+        setData(data);
+      });
   }, []);
 
   /* const MapComponent = dynamic(
@@ -20,40 +22,49 @@ function HomePage() {
     { ssr: false } // This line is important. It's what prevents server-side render
   ); */
 
-
   return (
     <Layout>
       <div className={styles.gridContainer}>
         <section className={styles.box1}>
-          <Box>
-            <p>Total Deaths: Europe</p>
-            <h1>
-              {data.deaths ? data.deaths?.toLocaleString() : 'loading...'}
-            </h1>
+          <h1>Total Deaths: Europe</h1>
+          <h2>{data.deaths ? data.deaths?.toLocaleString() : 'loading...'}</h2>
 
-            <h1>
-              {data.deathsPerOneMillion
-                ? data.deathsPerOneMillion?.toFixed(0).toLocaleString()
-                : 'Loading...'}
-            </h1>
-          </Box>
+          <p>
+            {data.deathsPerOneMillion
+              ? `${data.deathsPerOneMillion
+                  ?.toFixed(0)
+                  .toLocaleString()} per million`
+              : 'Loading...'}
+          </p>
         </section>
         <section className={styles.box2}>
-          <Box>
-            <p>Total Deaths: Netherlands</p>
-            <h1>5.000.000</h1>
-            <h1>50 per million</h1>
-          </Box>
+          <h1>Total Population: Europe</h1>
+          <h2>
+            {' '}
+            {data.todayDeaths
+              ? data.todayDeaths?.toLocaleString()
+              : 'loading...'}
+          </h2>
+          <span>less than yesterday</span>
         </section>
         <section className={styles.info}>
-          <Box>
-            <p>General Info: Netherlands</p>
-            <p>Some random info from api</p>
-          </Box>
+          <h3>General Info: Netherlands</h3>
+          <h3>Some random info from api</h3>
         </section>
 
         <section className={styles.map}>
           {/* <MapComponent /> */}
+          <div
+            style={{
+              height: '600px',
+              maxWidth: '1200px',
+              backgroundColor: '#f1f1f1',
+              display: 'grid',
+              placeItems: 'center',
+              fontSize: '4rem',
+            }}>
+            Map is not loaded
+          </div>
         </section>
         <section className={styles.graph1}>
           <Box>
