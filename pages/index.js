@@ -1,55 +1,66 @@
 import dynamic from 'next/dynamic';
+import useSWR from 'swr';
 import { useEffect, useState } from 'react';
 import Box from '../components/Box';
 import Layout from '../components/Layout';
-
+import Navbar from '../components/Navbar';
 import styles from '../styles/Index.module.css';
+// try react error boundaries!!!
+
 function HomePage() {
-  const [data, setData] = useState({});
-  const [fake, setFake] = useState();
-  // USE NEXTJS SWR TO FETCH DATA: CHECK DOCS: https://swr.vercel.app/
   useEffect(() => {
-    fetch('https://disease.sh/v3/covid-19/continents/europe?strict=true')
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setData(data);
-      });
+    fetch(`https://disease.sh/v3/covid-19/continents/europe?strict=true`).then(
+      (res) => res.json().then((data) => setContinentData(data))
+    );
   }, []);
 
+  const [continent, setContinentData] = useState('');
+  const displayCountryData = (continent) => {
+    setContinentData(continent);
+  };
   /* const MapComponent = dynamic(
     () => import('../components/MapComponent'), // replace '@components/map' with your component's location
     { ssr: false } // This line is important. It's what prevents server-side render
   ); */
+  console.log(continent);
 
   return (
     <Layout>
+      <Navbar displayCountryData={displayCountryData} />
       <div className={styles.gridContainer}>
         <section className={styles.box1}>
-          <h1>Total Deaths: Europe</h1>
-          <h2>{data.deaths ? data.deaths?.toLocaleString() : 'loading...'}</h2>
+          <h1>Total Deaths: {continent?.continent}</h1>
+          <h2>
+            {continent?.deaths
+              ? continent.deaths?.toLocaleString()
+              : 'loading...'}
+          </h2>
 
           <p>
-            {data.deathsPerOneMillion
-              ? `${data.deathsPerOneMillion
+            {continent?.deathsPerOneMillion
+              ? `${continent.deathsPerOneMillion
                   ?.toFixed(0)
                   .toLocaleString()} per million`
               : 'Loading...'}
           </p>
         </section>
         <section className={styles.box2}>
-          <h1>Total Population: Europe</h1>
-          <h2>
-            {' '}
-            {data.todayDeaths
-              ? data.todayDeaths?.toLocaleString()
-              : 'loading...'}
-          </h2>
-          <span>less than yesterday</span>
+          <h1>Deaths Today: {continent?.continent}</h1>
+          <h2> {continent?.todayDeaths?.toLocaleString()}</h2>
+          <p>Population: {continent?.population?.toLocaleString()}</p>
         </section>
         <section className={styles.info}>
-          <h3>General Info: Netherlands</h3>
-          <h3>Some random info from api</h3>
+          <h3>{continent?.continent}</h3>
+          <ul className={styles.infoList}>
+            <li>Total Countries: {continent?.countries?.length}</li>
+            <li>Total Recovered: {continent?.recovered}</li>
+            <li>Total Cases: {continent?.cases}</li>
+            <li>Today Recovered: {continent?.todayRecovered}</li>
+            <li>Today Cases: {continent?.todayCases}</li>
+            <br />
+            <li>Updated since:</li>
+            <li> {Date(continent?.updated)}</li>
+          </ul>
         </section>
 
         <section className={styles.map}>
