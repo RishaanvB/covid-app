@@ -7,7 +7,7 @@ const MapComponent = () => {
       center={[51.505, -0.09]}
       zoom={5}
       scrollWheelZoom={false}
-      style={{ height: '600px', maxWidth: '1200px', margin: 0 }}>
+      style={{ height: '600px', width: '1800px', margin: 0 }}>
       <TileLayer
         attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

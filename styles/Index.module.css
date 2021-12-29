@@ -3,8 +3,8 @@
   grid-template-columns: 3fr 3fr 2fr;
   grid-template-areas:
     'box1 box2 info'
-    'map map graph1'
-    'map map graph2';
+    'map map graph'
+    'map map graph';
   gap: 1.5rem;
 }
 .blackBox {
@@ -67,17 +67,14 @@
   margin-bottom: 0.5rem;
   border-bottom: 1px solid #f7f7f7;
 }
+.graph{
+  composes:boxUtils whiteBox;
+  grid-area:graph;
+}
 .map {
   grid-area: map;
 }
-.graph1 {
-  composes: boxUtils whiteBox;
-  grid-area: graph1;
-}
-.graph2 {
-  composes: boxUtils whiteBox;
-  grid-area: graph2;
-}
+
 
 .infoList {
   text-align: start;

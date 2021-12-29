@@ -2,17 +2,19 @@ import dynamic from 'next/dynamic';
 import useSWR from 'swr';
 import { useEffect, useState } from 'react';
 import Box from '../components/Box';
+
+import Graph from '../components/Graph';
 import Layout from '../components/Layout';
 import Navbar from '../components/Navbar';
 import styles from '../styles/Index.module.css';
 // try react error boundaries!!!
 
 function HomePage() {
-  useEffect(() => {
-    fetch(`https://disease.sh/v3/covid-19/continents/europe?strict=true`).then(
-      (res) => res.json().then((data) => setContinentData(data))
-    );
-  }, []);
+  // useEffect(() => {
+  //   fetch(`https://disease.sh/v3/covid-19/continents/europe?strict=true`).then(
+  //     (res) => res.json().then((data) => setContinentData(data))
+  //   );
+  // }, []);
 
   const [continent, setContinentData] = useState('');
   const displayCountryData = (continent) => {
@@ -22,7 +24,6 @@ function HomePage() {
     () => import('../components/MapComponent'), // replace '@components/map' with your component's location
     { ssr: false } // This line is important. It's what prevents server-side render
   ); */
-  console.log(continent);
 
   return (
     <Layout>
@@ -59,16 +60,21 @@ function HomePage() {
             <li>Today Cases: {continent?.todayCases}</li>
             <br />
             <li>Updated since:</li>
-            <li> {Date(continent?.updated)}</li>
+            {/* omitting ternary 'if' will result in react hydration error for the timestamp. There will be a small difference in first render components and ssr components::
+            
+            Warning: Text content did not match. Server: "Wed Dec 29 2021 21:23:24 GMT+0100 (Central European Standard Time)" Client: "Wed Dec 29 2021 21:23:25 GMT+0100 (Central European Standard Time)"
+            
+            */}
+            <li> {continent ? Date(continent.updated) : 'Calculating...'}</li>
           </ul>
         </section>
-
+        <Graph continent={continent} />
         <section className={styles.map}>
           {/* <MapComponent /> */}
           <div
             style={{
               height: '600px',
-              maxWidth: '1200px',
+              maxWidth: '1800px',
               backgroundColor: '#f1f1f1',
               display: 'grid',
               placeItems: 'center',
@@ -76,18 +82,6 @@ function HomePage() {
             }}>
             Map is not loaded
           </div>
-        </section>
-        <section className={styles.graph1}>
-          <Box>
-            <h1>graph with total deaths per country in continent</h1>
-          </Box>
-        </section>
-        <section className={styles.graph2}>
-          <Box>
-            <h1>
-              graph with total deaths per million per country in continent
-            </h1>
-          </Box>
         </section>
       </div>
     </Layout>
