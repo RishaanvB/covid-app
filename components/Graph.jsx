@@ -1,10 +1,8 @@
-import { useState, useEffect } from 'react';
 import useSWR from 'swr';
 import styles from '../styles/Graph.module.css';
 import Image from 'next/image';
 
 export default function Graph({ continent }) {
-  
   const fetcher = (url) => fetch(url).then((res) => res.json());
 
   const { data: allCountries, error } = useSWR(
@@ -17,9 +15,9 @@ export default function Graph({ continent }) {
   const countries = allCountries
     ?.filter((c) => c.continent === continent?.continent)
     .sort((a, b) => b.deaths - a.deaths);
-  // console.log(countries[0].deaths, 'highest death');
-  // console.log(countries?.deaths, 'countries');
-  const rate = countries[0]?.deaths || 1
+
+
+  const rate = countries[0]?.deaths || 1;
 
   return (
     <div className={styles.container}>
@@ -39,7 +37,9 @@ export default function Graph({ continent }) {
               style={{
                 width: `${(country.deaths / rate) * 20}rem`,
                 minWidth: `${2}rem`,
-                backgroundColor:`hsl(0, 75%, ${((1-1/(index+1))/1 * 40)}%)`
+                backgroundColor: `hsl(0, 75%, ${
+                  ((1 - 1 / (index + 1)) / 1) * 40
+                }%)`,
               }}
               className={styles.countryDeaths}></span>
             <span className={styles.countryNames}>{country.country}</span>

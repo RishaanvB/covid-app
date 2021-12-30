@@ -1,13 +1,10 @@
 import dynamic from 'next/dynamic';
-import useSWR from 'swr';
-import { useEffect, useState } from 'react';
-import Box from '../components/Box';
+import { useState } from 'react';
 import Head from 'next/head';
 import Graph from '../components/Graph';
 import Layout from '../components/Layout';
 import Navbar from '../components/Navbar';
 import styles from '../styles/Index.module.css';
-// try react error boundaries!!!
 
 function HomePage() {
   const [continent, setContinentData] = useState('');
@@ -75,7 +72,13 @@ function HomePage() {
         </section>
       </div>
       <footer style={{ textAlign: 'center' }}>
-        Data is taken from the <a style={{ textDecoration: 'underline' }} href="https://www.worldometers.info/coronavirus/">WorldOMeter</a> data using the api from{' '}
+        Data is taken from the{' '}
+        <a
+          style={{ textDecoration: 'underline' }}
+          href="https://www.worldometers.info/coronavirus/">
+          WorldOMeter
+        </a>{' '}
+        data using the api from{' '}
         <a
           style={{ textDecoration: 'underline' }}
           rel="noopener noreferrer"
