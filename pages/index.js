@@ -10,20 +10,17 @@ import styles from '../styles/Index.module.css';
 // try react error boundaries!!!
 
 function HomePage() {
-  // useEffect(() => {
-  //   fetch(`https://disease.sh/v3/covid-19/continents/europe?strict=true`).then(
-  //     (res) => res.json().then((data) => setContinentData(data))
-  //   );
-  // }, []);
-
   const [continent, setContinentData] = useState('');
+
+  const MapComponent = dynamic(
+    () => import('../components/MapComponent'), // replace '@components/map' with your component's location
+    { ssr: false } // This line is important. It's what prevents server-side render
+  );
+
   const displayCountryData = (continent) => {
     setContinentData(continent);
   };
-  /* const MapComponent = dynamic(
-    () => import('../components/MapComponent'), // replace '@components/map' with your component's location
-    { ssr: false } // This line is important. It's what prevents server-side render
-  ); */
+
   return (
     <Layout>
       <Head>
@@ -74,24 +71,17 @@ function HomePage() {
         </section>
         <Graph continent={continent} />
         <section className={styles.map}>
-          {/* <MapComponent /> */}
-          <div
-            style={{
-              height: '600px',
-              maxWidth: '1800px',
-              backgroundColor: '#f1f1f1',
-              display: 'grid',
-              placeItems: 'center',
-              fontSize: '4rem',
-            }}>
-            Map is not loaded
-          </div>
+          <MapComponent />
         </section>
       </div>
-      <footer style={{ textAlign: 'center'}}>
-        Data is coming from{' '}
-        <a style={{textDecoration:'underline'}} rel="noopener noreferrer" target="_blank" href="https://disease.sh/">
-          Disease API
+      <footer style={{ textAlign: 'center' }}>
+        Data is taken from the <a style={{ textDecoration: 'underline' }} href="https://www.worldometers.info/coronavirus/">WorldOMeter</a> data using the api from{' '}
+        <a
+          style={{ textDecoration: 'underline' }}
+          rel="noopener noreferrer"
+          target="_blank"
+          href="https://disease.sh/">
+          Disease API.
         </a>
       </footer>
     </Layout>

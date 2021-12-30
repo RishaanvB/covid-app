@@ -1,5 +1,6 @@
 .container {
   max-height: 600px;
+  width: 100%;
   overflow-y: scroll;
 }
 
@@ -29,4 +30,15 @@
   height: 1.1rem;
   width: 8rem;
   max-width: 10rem;
+}
+
+@media screen and (max-width: 1020px) {
+  .container {
+    width: 300%;
+    max-height: fit-content;
+    overflow-y: auto;
+  }
+  .countryList {
+    width: 100%;
+  }
 }
