@@ -2,7 +2,7 @@ import dynamic from 'next/dynamic';
 import useSWR from 'swr';
 import { useEffect, useState } from 'react';
 import Box from '../components/Box';
-
+import Head from 'next/head';
 import Graph from '../components/Graph';
 import Layout from '../components/Layout';
 import Navbar from '../components/Navbar';
@@ -24,9 +24,11 @@ function HomePage() {
     () => import('../components/MapComponent'), // replace '@components/map' with your component's location
     { ssr: false } // This line is important. It's what prevents server-side render
   ); */
-
   return (
     <Layout>
+      <Head>
+        <title>Death by Covid</title>
+      </Head>
       <Navbar displayCountryData={displayCountryData} />
       <div className={styles.gridContainer}>
         <section className={styles.box1}>
@@ -54,10 +56,12 @@ function HomePage() {
           <h3>{continent?.continent}</h3>
           <ul className={styles.infoList}>
             <li>Total Countries: {continent?.countries?.length}</li>
-            <li>Total Recovered: {continent?.recovered}</li>
-            <li>Total Cases: {continent?.cases}</li>
-            <li>Today Recovered: {continent?.todayRecovered}</li>
-            <li>Today Cases: {continent?.todayCases}</li>
+            <li>Total Recovered: {continent?.recovered?.toLocaleString()}</li>
+            <li>Total Cases: {continent?.cases?.toLocaleString()}</li>
+            <li>
+              Today Recovered: {continent?.todayRecovered?.toLocaleString()}
+            </li>
+            <li>Today Cases: {continent?.todayCases?.toLocaleString()}</li>
             <br />
             <li>Updated since:</li>
             {/* omitting ternary 'if' will result in react hydration error for the timestamp. There will be a small difference in first render components and ssr components::
@@ -84,6 +88,12 @@ function HomePage() {
           </div>
         </section>
       </div>
+      <footer style={{ textAlign: 'center'}}>
+        Data is coming from{' '}
+        <a style={{textDecoration:'underline'}} rel="noopener noreferrer" target="_blank" href="https://disease.sh/">
+          Disease API
+        </a>
+      </footer>
     </Layout>
   );
 }

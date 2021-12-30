@@ -9,9 +9,6 @@
   font-size: 1.4rem;
   font-weight: bold;
   text-transform: uppercase;
-  background-clip: text;
-  background-image: url('https://c.tenor.com/ZP_y3606__wAAAAd/virus-corona-virus.gif');
-  color: transparent;
 }
 .list {
   position: relative;
@@ -19,13 +16,13 @@
   margin: 0;
   display: flex;
   justify-content: space-between;
-  column-gap: 2vw;
+  /* column-gap: 2vw; */
   list-style-type: none;
   border: 1px solid rgba(105, 105, 105, 0);
   border-radius: 5px;
 }
 .listItem {
-  font-size: 1rem;
+  font-size: clamp(.8rem, 1vw, 1rem);
   display: block;
   text-decoration: none;
   cursor: pointer;
@@ -36,4 +33,8 @@
   color: rgb(128, 0, 0);
 }
 
-
+@media screen  and (max-width: 720px) {
+  .header{
+    flex-direction: column;
+  }
+}
